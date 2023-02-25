@@ -1,0 +1,84 @@
+
+.contain {
+    border: solid 5px rgb(0, 181, 253);
+    border-radius: 20px;
+    position: absolute;
+    /* width: 0px;
+    height: 0px; */
+
+/* div 居中 */
+    top: 20%;
+    /* bottom: 0px; */
+    right: 0px;
+    left: 0px;
+    /* height: 350px; */
+    width: 350px;
+    margin: auto;
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 楷体;
+    background: linear-gradient(to right, rgb(135, 220, 253), rgb(214, 240, 247));
+    padding: 20px;
+
+    /* 添加阴影 
+        box-shadow: 2px 4px 6px #000;
+        2px : 表示水平阴影的位置
+        4px : 表示垂直阴影的位置
+        5px : 表示模糊距离
+        #000 ： 表示阴影的颜色（#000 黑色）
+        
+    */
+    box-shadow: 10px 15px 10px rgb(77, 75, 75);
+}
+
+.contain_title {
+    text-align: center;
+    font-size: larger;
+}
+
+.info>div {
+    display: inline-block;
+    width: 80px;
+    padding: 25px;
+    vertical-align: middle;
+}
+
+
+    /*验证码*/
+
+.code{
+        background-color: silver;
+        font-family:Arial; /*设置字体*/
+        font-style:initial;
+        color:rgb(105, 243, 13);
+        font-size:20px;
+        border:0;
+        
+        font-weight:bolder;            
+        width:80px;
+        height:23px;  
+        margin-top: -30px;         
+}
+a{
+    text-decoration:none;
+    font-size:12px;
+    color:#288bc4;
+    margin-top: ;
+    
+   
+}
+a:hover{
+    text-decoration:underline;
+}
+
+.submit_button {
+    
+    margin-right: 60px;
+    margin-left: 90px;
+    font-size: 15px;
+}
+.register_button{
+    font-size: 15px;
+}

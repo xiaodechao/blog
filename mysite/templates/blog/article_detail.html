@@ -1,0 +1,246 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block maim %}
+{% csrf_token %}
+      <div class="py-4">
+         <div class="container">
+            <div class="row">
+               <!-- Main Content -->
+               <main class="col col-xl-9 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+                  <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
+                     <div class="job-search p-3 border-bottom overflow-hidden" style="overflow-wrap: break-word;">
+                        <div class="input-group">
+
+                           <h2>{{ article.title }}</h2>
+                           （文章标题）
+                           
+                        </div>
+                     </div>
+                     <ul class="nav border-bottom osahan-line-tab" style="display: block;">
+                        <li class="nav-item">
+                           <a class="nav-link active" data-toggle="tab" href="#home" >作者：{{ article.user.username }}</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link active" data-toggle="tab" href="#home" >分类：{{ article.category }}</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link active" data-toggle="tab" href="#home"> 修改时间：{{ article.update_time }}</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link active" data-toggle="tab" href="#home" >创建时间：{{ article.create_time }}</a>
+                        </li>
+                     </ul>
+                     <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                           <div class="p-3 job-tags">
+                              <div><span>摘要：</span>{{ article.abstract }}</div>
+                           </div>
+                           <div class="border-top py-3 px-2">
+                              <div class="">
+                                 {{ article.content|safe }}
+                              </div>
+                              <div class="border-bottom py-4"></div>
+                              
+                              
+                              <div class="py-2">
+                                 文章评论：
+                              </div>
+                              <ul class=" list-group comment_list">
+
+                                 {% for comment in comment_list %}
+                                    {% if not comment.parent_comment_id %}
+                                    
+                                     <li class="list-group-item">
+                                         <div>
+                                             
+                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;<a href="">{{ forloop.counter }}楼</a> &nbsp;&nbsp;
+                                                <a href=""><span>{{ comment.user.username }}</span></a>
+                                                <span class="float-right">{{ comment.create_time|date:"Y-m-d H:i" }}</span>
+                                                <div>
+                                                
+                                                
+                                                <a class="reply_btn pull-right float-right" username="{{ comment.user.username }}" comment_pk="{{ comment.pk }}">回复&nbsp;&nbsp;</a>
+                                                </div>
+                                             
+                                                
+                                                <div class="comment_con py-3">
+                                                   <p>{{ comment.content }}</p>
+                                                </div>
+                                    
+                                                {% for ch_comment in comment_list %}
+                                                
+                                                   {% if ch_comment.parent_comment_id_id == comment.id %}
+                                                   
+                                        
+                                                   <div class="pid_info well px-4">
+                                                      <p>
+                                                            <b class="">{{ ch_comment.user.username }}&nbsp;&nbsp回复&nbsp;&nbsp{{ ch_comment.to_user }}
+                                                            :</b>&nbsp;&nbsp;{{ ch_comment.content }}
+                                                      </p>
+                                                   </div>
+                                                   {% endif %}
+                                                {% endfor %}
+                                             
+                                    
+                                         </div>
+                                     </li>
+                                     {% endif %}
+                                 {% endfor %}
+                             </ul>
+                              
+                           </div>
+                           
+                        </div>
+                        
+                        
+                        
+                     </div>
+                  </div>
+               </main>
+
+
+
+
+               <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
+                  
+                  
+                     <div class="shadow-sm rounded bg-white job-item mb-3">
+                        <div class="d-flex align-items-center p-3 job-item-header">
+                           <div class="overflow-hidden mr-2">
+                              
+                              <h6 class="font-weight-bold text-dark mb-0 text-truncate">提交评论</h6>
+                           </div>
+                         
+                        </div>
+                        
+                        <div class="p-3 job-item-footer">
+                           <small class="text-gray-500"><i class="feather-clock"></i> 请发布高素质言论</small>
+                        </div>
+                     </div>
+                  
+                     <div class="shadow-sm rounded bg-white job-item mb-3">
+                        <div class="d-flex align-items-center p-3 job-item-header">
+                           <div class="overflow-hidden mr-2">
+                              <h6 class="font-weight-bold text-dark mb-0 text-truncate">文章评论内容</h6>
+                              
+                             
+                           </div>
+                           
+                        </div>
+                        <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
+                           <div class="overlap-rounded-circle">
+                              
+                           </div>
+                                                     
+                           <textarea name="post_text" id="comment_content" cols="60" rows="10" class="font-weight-bold text-muted" class=""></textarea>
+                           
+                        </div>
+                        <div class="p-3 job-item-footer">
+                           <a class="mr-3 text-secondary"><div><small class="">
+                              <i class="feather-clock"></i> <button class="btn btn-default comment_btn">提交评论</button></small></div></a>
+                        </div>
+                        
+                     </div>
+                     
+                  
+                  <div class="box shadow-sm border rounded bg-white mb-3">
+                     <div class="box-title border-bottom p-3">
+                        <h6 class="m-0">喜欢的点点赞</h6>
+                        <div class="p-3 border-bottom osahan-post-footer">
+                           <a href="#" class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> {{ article.up_count }}</a>
+                           <a href="#" class="mr-3 text-secondary"><i class="feather-message-square"></i>{{ article.comment_count }}</a>
+                           <a href="#" class="mr-3 text-secondary"><i class="feather-thumbs-down"></i> {{ article.down_count }}</a>
+                        </div>
+                     </div>
+                    
+                  </div>
+               </aside>
+            </div>
+         </div>
+      </div>
+      
+      <script>
+         var pid = '';
+         $(".comment_btn").click(function () {
+            var content = $('#comment_content').val();
+            var to_user = ''
+            // console.log(content)
+            
+            
+            if (pid) {
+               var reg = new RegExp('@')
+               var content_str = content.replace(reg, '')
+               var index = content.indexOf("\n");
+               content = content.slice(index + 1);
+               to_user = content_str.split("\n")[0];
+              console.log(to_user)
+            }
+            $.ajax({
+                url: "{% url 'comment' %}",
+                type: "post",
+                data: {
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    "article_id": {{ article.id }},
+                    "content": content,
+                    "pid": pid,
+                    "to_user": to_user,
+                },
+                success: function (data) {
+               //      var create_time = data.create_time;
+               //      var username = data.username;
+               //      var content = data.content;
+               //      var comment_pk = data.comment_id;
+               //      if (pid) {
+               //          var s = `<li class="list-group-item">
+               //      <div>
+               //          <span>${create_time}</span>
+               //          <a href=""><span>${username}</span></a>
+               //          <a  class="reply_btn pull-right" username = "${username}" comment_pk="${comment_pk}">回复&nbsp;&nbsp;</a>
+               //              <div class="pid_info well">
+               //                  <p>
+               //                      ${username} :
+               //                     ${content}
+               //                  </p>
+               //              </div>
+               //          <div class="comment_con">
+               //              <p>${content}</p>
+               //          </div>
+               //      </div>
+               //  </li>`;
+               //      } else {
+               //          var s = ` <li class="list-group-item">
+               //      <div>
+               //          <span>${create_time}</span>
+               //          <a href=""><span>${username}</span></a>
+               //          <a href="" class="reply_btn pull-right" >回复&nbsp;&nbsp;</a>
+               //          <div class="comment_con">
+               //              <p>${content}</p>
+               //          </div>
+               //      </div>
+               //  </li>`;
+               //      }
+               //      $("ul.comment_list").append(s);
+               //      $('.comment_content').val('');
+                  pid = '';
+                  window.location.href="{% url 'blog' %}article_detail/{{ article.id }}"
+                }
+            });
+
+        });
+      </script>
+      <script>
+                //回复按钮事件
+        $(".reply_btn").click(function () {
+            $('#comment_content').focus();
+            var val = '@' + $(this).attr("username");
+            $('#comment_content').val(val + '\n');
+            pid = $(this).attr("comment_pk");
+        });
+      </script>
+      
+      
+
+
+
+
+{% endblock maim %}
